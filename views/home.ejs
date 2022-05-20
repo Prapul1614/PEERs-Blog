@@ -1,14 +1,17 @@
 
 <%- include('partials/header'); %> 
 
-<h1>Home</h1>
-<p>   <%= para %>     </p>
 
-<% posts.forEach(function(ele){ %> 
-    <h1>  <%= ele.title %>  </h1>
-    <p>  <%= ele.content.substring(0,100) + " ..." %>  
-        <a href="/posts/<%= ele.title %> ">Read More</a>
-    </p>
+<% posts.forEach(function(ele , ind){ %> 
+    <% if(ind === 0){  %>
+        <h1>  <%= ele.name %>  </h1>
+        <p>  <%= ele.post  %>  </p>
+    <% } else { %>
+        <h1>  <%= ele.name %>  </h1>
+        <p>  <%= ele.post.substring(0,100) + " ..." %>  
+            <a href="/posts/<%= ele.name %> ">Read More</a>
+        </p>
+    <% } %> 
     
 <% }); %> 
 
