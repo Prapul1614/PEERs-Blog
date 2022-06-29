@@ -1,6 +1,16 @@
 # Daily-Journal
-You can find this application [here](https://mysterious-spire-91757.herokuapp.com/)
+Application is deployed [here](https://mysterious-spire-91757.herokuapp.com/) 
 
-This application can be used as dairy.<br />
-Used MongoDB to store the data.<br />
-By going to /compose new post can be added.
+* Objective of this project is to create an online dairy which can be accessed anytime and anywhere.<br />
+* Programmed the backend server using NodeJS and built middleware using Express.<br />
+* Used MongoDB(non relational database) to store data.<br />
+* Deployed Application using heroku.<br />
+
+# Further Development
+* Increasing security and privacy using token authentification and encryption of personal entries.<br />
+ 
+# Details
+* Home page consists of all entries.<br />
+* by Clicking "Read more" redirects you to the page containing only present entry.<br />
+* By going to "/compose" new entry can be added.<br />
+
