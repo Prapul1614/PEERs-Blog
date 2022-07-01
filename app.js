@@ -30,8 +30,21 @@ const defaultHome = new Post({
   post: homeStartingContent
 })
 
+const userSchema = new mongoose.Schema({
+  email: String ,
+  password: String
+});
 
-app.get("/",function(req , res){
+
+//userSchema.plugin(encrypt, { secret: process.env.SECRET , encryptedFields: ['password'] });
+
+const User = new mongoose.model("User",userSchema);
+
+app.get("/", function(req,res){
+  res.render('home');
+})
+
+app.get("/allPosts",function(req , res){
 
   Post.find({},function(err , foundPosts){
     if(err) console.log(err);
@@ -43,7 +56,7 @@ app.get("/",function(req , res){
         });
         res.redirect("/");
       }else
-      res.render('home',{ posts: foundPosts });
+      res.render('allPosts',{ posts: foundPosts });
     }
   })
 })
@@ -82,6 +95,55 @@ app.get("/posts/:title",function(req , res){
     if(i === foundPosts.length) res.redirect("/");
   });
 })
+
+app.get("/login", function(req, res){
+  res.render("login");
+});
+
+app.get("/register", function(req, res){
+  res.render("register");
+});
+
+app.post("/register", function( req ,res ){
+  const newUser = new User({
+      email: req.body.username,
+      password: req.body.password
+  })
+  User.findOne({email: newUser.email}, function(err , foundUser){
+    if(foundUser){
+      if(foundUser.password === newUser.password)  
+        res.redirect("/allPosts");
+        else console.log("Incorrect Password");
+    }
+    else{
+        newUser.save(function(er){
+          if(er){
+              console.log(er);
+          }else{
+              res.redirect("/allPosts");
+          }
+        });
+    }
+  })
+  
+})
+
+// if password is incorrect say so
+// if email not found redirect them
+app.post("/login", function( req , res ){
+  const email = req.body.username;
+  const password = req.body.password;
+
+  User.findOne({email: email}, function(err , foundUser){
+      if(err) console.log(err);
+      else{
+          if(foundUser.password === password) 
+          res.redirect("/allPosts");
+          else console.log("Incorrect Password");
+      }
+  })
+});
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {

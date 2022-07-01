@@ -1,0 +1,18 @@
+
+<%- include('partials/header'); %> 
+
+
+<% posts.forEach(function(ele , ind){ %> 
+    <% if(ind === 0){  %>
+        <h1>  <%= ele.name %>  </h1>
+        <p>  <%= ele.post  %>  </p>
+    <% } else { %>
+        <h1>  <%= ele.name %>  </h1>
+        <p>  <%= ele.post.substring(0,100) + " ..." %>  
+            <a href="/posts/<%= ele.name %> ">Read More</a>
+        </p>
+    <% } %> 
+    
+<% }); %> 
+
+<%- include('partials/footer'); %> 
