@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const { redirect, append } = require("express/lib/response");
 const session = require('express-session');
 const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
 // no need to require passport local it will be required passportLocalMongoose
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -65,6 +66,7 @@ passport.use(User.createStrategy());
 
 // use static serialize and deserialize of model for passport session support
 // used to serialize the user for the session
+
 passport.serializeUser(function(user, done) {
   done(null, user.id); 
  // where is this user.id going? Are we supposed to access this anywhere?
@@ -83,7 +85,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/allPosts",
+  callbackURL: "https://mysterious-spire-91757.herokuapp.com/auth/google/allPosts",
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -248,6 +250,7 @@ app.post("/register", function( req ,res ){
 
 // this is the new login route, which authenticates first and THEN
 // does the login (which is required to create the session
+//passport.serializeUser(User.serializeUser());passport.deserializeUser(User.deserializeUser());
 app.post("/login", 
     passport.authenticate("local"), function(req, res) {
     const user = new User({
@@ -257,7 +260,7 @@ app.post("/login",
     req.login(user, function(err) {
         if(err) {
             console.log(err);
-        } else {
+        } else { 
             res.redirect("/allPosts");
         }
     });
@@ -277,3 +280,6 @@ if (port == null || port == "") {
 app.listen(port, function() {
   console.log("Server started on port 3000");
 });
+
+//  http://localhost:3000
+//  http://localhost:3000/auth/google/allPosts
