@@ -85,7 +85,8 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: "https://mysterious-spire-91757.herokuapp.com/auth/google/allPosts",
+  // callbackURL: "https://mysterious-spire-91757.herokuapp.com/auth/google/allPosts",
+  callbackURL: "./auth/google/allPosts",
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
