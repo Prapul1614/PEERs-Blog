@@ -34,7 +34,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://Prapul:Saiprapul02@cluster0.xfdyn.mongodb.net/blogDB");
+mongoose.connect("mongodb+srv://Prapul:process.env.MONGO_PASSWORDcluster0.xfdyn.mongodb.net/blogDB");
 
 const postSchema = new mongoose.Schema({
   name: String,
